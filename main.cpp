@@ -52,8 +52,8 @@ int main()
 		centroidy[i] = y[i];
 
 		// For debugging
-		cout << "Centroid " << i << ": [" << centroidx[i] << ", " << centroidy[i] << "]" << endl;
-		outfile << "Centroid " << i << ": [" << centroidx[i] << ", " << centroidy[i] << "]" << endl;
+		//cout << "Centroid " << i << ": [" << centroidx[i] << ", " << centroidy[i] << "]" << endl;
+		//outfile << "Centroid " << i << ": [" << centroidx[i] << ", " << centroidy[i] << "]" << endl;
 	}
 
 	// Assign points to centroids based on closest mean
@@ -75,6 +75,20 @@ int main()
 		{
 			assignCentroid( x[i], y[i], i );
 		}
+	}
+
+	// Print out points by cluster
+	for( int i=0; i<k; i++)
+	{
+		outfile << "Data for cluster " << i <<":" << endl << endl;
+		for( int j=0; j<dataCount; j++)
+		{
+			if( assignedto[j] == i)
+			{
+				outfile << x[j] << "  " << y[j] << endl; 
+			}
+		}
+		outfile << endl << endl;
 	}
 
 	outfile.close();
@@ -114,8 +128,6 @@ void calculateNewCentroid()
 {
 	for( int i=0; i<k; i++)
 	{
-		cout << endl;
-		outfile << endl;
 
 		oldcentroidx[i] = centroidx[i];
 		oldcentroidy[i] = centroidy[i];
@@ -138,8 +150,5 @@ void calculateNewCentroid()
 
 		double movement = calculateDistance(oldcentroidx[i], oldcentroidy[i], centroidx[i], centroidy[i]);
 
-		cout << "Centroid " << i << ": [" << centroidx[i] << ", " << centroidy[i] << "]" << endl;
-		outfile << "Centroid " << i << ": [" << centroidx[i] << ", " << centroidy[i] << "]" << endl;
-		cout << "Centroid moved " << movement << endl;
 	}
 }
